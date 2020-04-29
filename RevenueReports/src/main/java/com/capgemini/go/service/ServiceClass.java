@@ -35,9 +35,9 @@ public class ServiceClass implements ServiceInterface {
 		ArrayList<RevenueReport> revenuelist = new ArrayList<RevenueReport>();
 		for (i = 0; i < l3.size(); i++) {
 			String objdate = l3.get(i).getDate1();// getting date from object
+			revenue = l3.get(i).getProduct_price();
 			for (j = i + 1; j < l3.size(); j++) {
 				String objdate1 = l3.get(j).getDate1();
-				revenue = l3.get(i).getProduct_price();
 				if (objdate1.subSequence(5, 7).equals(objdate.subSequence(5, 7)))
 					revenue = revenue + l3.get(j).getProduct_price();
 				else

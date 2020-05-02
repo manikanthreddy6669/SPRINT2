@@ -21,25 +21,26 @@ public class ServiceClass implements ServiceInterface {
 
 	//To convert date format from yyyy-mm-dd to dd-mmm-yyyy
 	String dateformat(String s) {
-		String months = new DateFormatSymbols().getMonths()[Integer.parseInt(s.substring(5, 7)) - 1];
-		String cdate = s.subSequence(8, 10) + "-" + months.substring(0, 3) + "-" + s.substring(0, 4);
+		String month = new DateFormatSymbols().getMonths()[Integer.parseInt(s.substring(5, 7)) - 1];
+		String cdate = s.subSequence(8, 10) + "-" + month.substring(0, 3) + "-" + s.substring(0, 4);
 		return cdate;
 	}
 
 	@Override
 	public List<RevenueReport> viewDetailedSalesReportByProduct(String entry, String exit, String category) {
 
-		List<RevenueTable> l3 = daoobj.viewDetailedSalesReportByProduct(dateformat(entry), dateformat(exit), category);
+		List<RevenueTable> transactionList = daoobj.viewDetailedSalesReportByProduct(dateformat(entry), dateformat(exit), category);
 		int i, j, revenue = 0, change = 0, prev = 0;
 		String period, colorcode;
-		ArrayList<RevenueReport> revenuelist = new ArrayList<RevenueReport>();
-		for (i = 0; i < l3.size(); i++) {
-			String objdate = l3.get(i).getDate1();// getting date from object
-			revenue = l3.get(i).getProduct_price();
-			for (j = i + 1; j < l3.size(); j++) {
-				String objdate1 = l3.get(j).getDate1();
+		ArrayList<RevenueReport> revenueList = new ArrayList<RevenueReport>();
+		//Calculating each month revenue
+		for (i = 0; i < transactionList.size(); i++) {
+			String objdate = transactionList.get(i).getDate1();// getting date from object
+			revenue = transactionList.get(i).getProduct_price();
+			for (j = i + 1; j < transactionList.size(); j++) {
+				String objdate1 = transactionList.get(j).getDate1();
 				if (objdate1.subSequence(5, 7).equals(objdate.subSequence(5, 7)))
-					revenue = revenue + l3.get(j).getProduct_price();
+					revenue = revenue + transactionList.get(j).getProduct_price();
 				else
 					break;
 			}
@@ -59,10 +60,10 @@ public class ServiceClass implements ServiceInterface {
 			else
 				colorcode = "red";
 			RevenueReport r = new RevenueReport(period, revenue, change, percentagegrowth, colorcode);
-			revenuelist.add(r);
+			revenueList.add(r);
 			i = j - 1;
 			prev = revenue;
 		}
-		return revenuelist;
+		return revenueList;
 	}
 }

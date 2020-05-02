@@ -23,11 +23,10 @@ public class ControllerClass {
 
 	// Get RevenueReports
 	@GetMapping("/RevenueReport/{date1}/{date2}/{category}")
-	private ResponseEntity<List<RevenueReport>> viewDetailedSalesReportByProduct(@PathVariable("date1") String entry, @PathVariable("date2") String exit,@PathVariable("category") String category) {
-		System.out.println(entry+exit+category);
+	private ResponseEntity<List<RevenueReport>> viewDetailedSalesReportByProduct(@PathVariable("date1") String entry,@PathVariable("date2") String exit, @PathVariable("category") String category) {
 
-		List<RevenueReport> revenuelist = serviceobj.viewDetailedSalesReportByProduct(entry,exit,category);
-		return new ResponseEntity<List<RevenueReport>>(revenuelist,HttpStatus.OK);
+		List<RevenueReport> revenueList = serviceobj.viewDetailedSalesReportByProduct(entry, exit, category);
+		return new ResponseEntity<List<RevenueReport>>(revenueList, HttpStatus.OK);
 	}
 
 }

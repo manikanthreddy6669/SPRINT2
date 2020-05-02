@@ -26,9 +26,8 @@ public class ControllerClass {
 	private ResponseEntity<List<RevenueTable>> viewSalesReportByUserAndCategory(@PathVariable("date1") String entry,
 			@PathVariable("date2") String exit, @PathVariable("userid") String targetUserId,
 			@PathVariable("category") String category) {
-		System.out.println(entry + exit + targetUserId + category);
-		List<RevenueTable> saleslist = serviceobj.viewSalesReportByUserAndCategory(entry, exit, targetUserId, category);
-		return new ResponseEntity<List<RevenueTable>>(saleslist, HttpStatus.OK);
+		List<RevenueTable> salesList = serviceobj.viewSalesReportByUserAndCategory(entry, exit, targetUserId, category);
+		return new ResponseEntity<List<RevenueTable>>(salesList, HttpStatus.OK);
 	}
 
 }

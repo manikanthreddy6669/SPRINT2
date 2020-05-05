@@ -1,5 +1,6 @@
 package com.capgemini.go.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class ControllerClass {
 
 	// Get SalesReports
 	@GetMapping("/SalesReport/{date1}/{date2}/{userid}/{category}")
-	private ResponseEntity<List<RevenueTable>> viewSalesReportByUserAndCategory(@PathVariable("date1") String entry,
-			@PathVariable("date2") String exit, @PathVariable("userid") String targetUserId,
+	public ResponseEntity<List<RevenueTable>> viewSalesReportByUserAndCategory(@PathVariable("date1") Date entry,
+			@PathVariable("date2") Date exit, @PathVariable("userid") String targetUserId,
 			@PathVariable("category") String category) {
 		List<RevenueTable> salesList = serviceobj.viewSalesReportByUserAndCategory(entry, exit, targetUserId, category);
-		return new ResponseEntity<List<RevenueTable>>(salesList, HttpStatus.OK);
+		return new ResponseEntity<>(salesList, HttpStatus.OK);
 	}
 
 }

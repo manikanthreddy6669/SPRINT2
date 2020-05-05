@@ -1,4 +1,6 @@
 package com.capgemini.go.entity;
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "testingreports")
 public class RevenueTable {
 	private String user_id;
-	private String date1;
+	private Date date1;
 	private int orderid;
 	@Id
 	private int productid;
@@ -20,10 +22,10 @@ public class RevenueTable {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public String getDate1() {
+	public Date getDate1() {
 		return date1;
 	}
-	public void setDate1(String date1) {
+	public void setDate1(Date date1) {
 		this.date1 = date1;
 	}
 	public int getOrderid() {

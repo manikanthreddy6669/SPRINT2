@@ -1,5 +1,6 @@
 package com.capgemini.go.service;
-
+ 
+import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,33 +20,31 @@ public class ServiceClass implements ServiceInterface {
 	@Autowired
 	DaoInterface daoobj;
 
-	//To convert date format from yyyy-mm-dd to dd-mmm-yyyy
-	String dateformat(String s) {
-		String month = new DateFormatSymbols().getMonths()[Integer.parseInt(s.substring(5, 7)) - 1];
-		String cdate = s.subSequence(8, 10) + "-" + month.substring(0, 3) + "-" + s.substring(0, 4);
-		return cdate;
-	}
-
+	@SuppressWarnings("deprecation")
 	@Override
-	public List<RevenueReport> viewDetailedSalesReportByProduct(String entry, String exit, String category) {
+	public List<RevenueReport> viewDetailedSalesReportByProduct(Date entry,Date exit, String category) {
 
-		List<RevenueTable> transactionList = daoobj.viewDetailedSalesReportByProduct(dateformat(entry), dateformat(exit), category);
-		int i, j, revenue = 0, change = 0, prev = 0;
-		String period, colorcode;
-		ArrayList<RevenueReport> revenueList = new ArrayList<RevenueReport>();
-		//Calculating each month revenue
+		List<RevenueTable> transactionList = daoobj.viewDetailedSalesReportByProduct(entry,exit, category);
+		int i;
+		int  j;
+		int revenue = 0;
+		int change = 0;
+		int prev = 0;
+		String period;
+		String colorcode;
+		ArrayList<RevenueReport> revenuelist = new ArrayList<>();
 		for (i = 0; i < transactionList.size(); i++) {
-			String objdate = transactionList.get(i).getDate1();// getting date from object
+			Date objdate = transactionList.get(i).getDate1();// getting date from object
 			revenue = transactionList.get(i).getProduct_price();
 			for (j = i + 1; j < transactionList.size(); j++) {
-				String objdate1 = transactionList.get(j).getDate1();
-				if (objdate1.subSequence(5, 7).equals(objdate.subSequence(5, 7)))
+				Date objdate1 = transactionList.get(j).getDate1();
+				if (objdate1.getMonth()==objdate.getMonth())
 					revenue = revenue + transactionList.get(j).getProduct_price();
 				else
 					break;
 			}
 			// combining month,year as period
-			period = new DateFormatSymbols().getMonths()[Integer.parseInt(objdate.substring(5, 7)) - 1] + " " + objdate.subSequence(0, 4);
+			period = new DateFormatSymbols().getMonths()[objdate.getMonth()] + " " + (objdate.getYear()+1900);
 			if (prev == 0)
 				change = revenue;
 			else
@@ -55,15 +54,15 @@ public class ServiceClass implements ServiceInterface {
 			// Indication of growth using color
 			if (percentagegrowth > 10)
 				colorcode = "green";
-			else if (percentagegrowth > 2 && percentagegrowth < 10)
+			else if (percentagegrowth > 2 && percentagegrowth <= 10)
 				colorcode = "blue";
 			else
 				colorcode = "red";
 			RevenueReport r = new RevenueReport(period, revenue, change, percentagegrowth, colorcode);
-			revenueList.add(r);
+			revenuelist.add(r);
 			i = j - 1;
 			prev = revenue;
 		}
-		return revenueList;
+		return revenuelist;
 	}
 }

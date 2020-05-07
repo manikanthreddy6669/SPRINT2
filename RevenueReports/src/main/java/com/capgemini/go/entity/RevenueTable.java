@@ -2,6 +2,7 @@ package com.capgemini.go.entity;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,20 +10,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "testingreports")
 public class RevenueTable {
-	private String user_id;
+	@Column(name = "user_id")
+	private String userid;
 	private Date date1;
 	private int orderid;
 	@Id
 	private int productid;
-	private String product_category;
-	private int product_price;
+	@Column(name = "product_category")
+	private String productCategory;
+	@Column(name = "product_price")
+	private int productPrice;
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public Date getDate1() {
@@ -49,25 +53,24 @@ public class RevenueTable {
 		this.productid = productid;
 	}
 
-	public String getProduct_category() {
-		return product_category;
+	public String getProductCategory() {
+		return productCategory;
 	}
 
-	public void setProduct_category(String product_category) {
-		this.product_category = product_category;
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
 	}
 
-	public int getProduct_price() {
-		return product_price;
+	public int getProductPrice() {
+		return productPrice;
 	}
 
-	public void setProduct_price(int product_price) {
-		this.product_price = product_price;
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 
 	public RevenueTable() {
 		super();
 	}
-	
 
 }

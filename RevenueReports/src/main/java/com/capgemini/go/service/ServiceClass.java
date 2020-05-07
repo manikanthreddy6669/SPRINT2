@@ -35,11 +35,11 @@ public class ServiceClass implements ServiceInterface {
 		ArrayList<RevenueReport> revenuelist = new ArrayList<>();
 		for (i = 0; i < transactionList.size(); i++) {
 			Date objdate = transactionList.get(i).getDate1();// getting date from object
-			revenue = transactionList.get(i).getProduct_price();
+			revenue = transactionList.get(i).getProductPrice();
 			for (j = i + 1; j < transactionList.size(); j++) {
 				Date objdate1 = transactionList.get(j).getDate1();
 				if (objdate1.getMonth()==objdate.getMonth())
-					revenue = revenue + transactionList.get(j).getProduct_price();
+					revenue = revenue + transactionList.get(j).getProductPrice();
 				else
 					break;
 			}

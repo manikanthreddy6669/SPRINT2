@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.capgemini.go.entity.RevenueTable;
 
 public interface DaoInterface extends JpaRepository<RevenueTable, Integer> {
-	@Query("select r from RevenueTable r where r.date1>=?1 and r.date1<=?2 and r.product_category=?3  order by r.date1")
+	@Query("select r from RevenueTable r where r.date1>=?1 and r.date1<=?2 and r.productCategory=?3  order by r.date1")
 	List<RevenueTable> viewDetailedSalesReportByProduct(Date entry, Date exit, String category);
 
 }
